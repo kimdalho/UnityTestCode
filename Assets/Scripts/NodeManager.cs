@@ -1,8 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+using UnityEngine.Networking;
+using System.Text;
+using System;
 
 public class NodeManager : MonoBehaviour
 {
@@ -141,6 +143,5 @@ public class NodeManager : MonoBehaviour
             Debug.Log("2");
             FallingManager();
         }
-
     }
 }
