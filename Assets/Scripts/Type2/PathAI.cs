@@ -30,6 +30,7 @@ public class PathAI : MonoBehaviour
         curNode.isWall = true;
     }
 
+
     public void Go()
     {
         StartCoroutine(CoGo());
