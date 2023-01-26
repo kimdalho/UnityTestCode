@@ -24,11 +24,13 @@ using UnityEngine;
 public class NodeManager2 : MonoBehaviour
 {
     public GameObject prefab_node;
-    public GameObject prefab_entity;
+    public GameObject prefab_Ai;
+
+
+    public List<Node> RegenNodeList = new List<Node>();
 
     public int[,,] board_array_master;
     public Node[,] board_array;
-    public List<Node> fallingNodes = new List<Node>();
 
     public Transform nodes;
     public Transform entitys;
@@ -50,6 +52,12 @@ public class NodeManager2 : MonoBehaviour
     private void Start()
     {
         CreateBaordObject(prefab_node, nodes);
+
+        for(int i =0; i < MAX_X; i++)
+        {
+            RegenNodeList.Add(board_array[i, MAX_Y - 1]);
+        }
+
         StartCoroutine(SetupLastIndex());
     }
 
@@ -87,13 +95,12 @@ public class NodeManager2 : MonoBehaviour
         board_array[3, MAX_Y - 1].CreateEntity();
     }
 
-    private void FallingManager()
+    private void CreateAi()
     {
-        for (int i = 0; i < fallingNodes.Count; i++)
-        {
-            fallingNodes[i].Falling();
-        }
+       int rnd = UnityEngine.Random.Range(0, MAX_X);
+       RegenNodeList[rnd].CreateAi();
     }
+
 
     
     //임시: 최종 목적지 0~5 = 3,1,2,0,4 
@@ -192,15 +199,14 @@ public class NodeManager2 : MonoBehaviour
             cur.GetComponent<SpriteRenderer>().color = Color.yellow;
             cur.isWall = true;
         }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            CreateAi();
+            CreateAi();
+        }
+
     }
 
-    private IEnumerator CoGen()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1);
-            CreateEntity();
-        }
-    }
 
 }

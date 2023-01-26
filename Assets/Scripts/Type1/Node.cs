@@ -13,6 +13,7 @@ using UnityEngine.UIElements;
 public class Node : MonoBehaviour
 {
     public Entity content;
+    public PathAI content2;
     public int x, y;
 
     //isDiagonalFall
@@ -61,6 +62,17 @@ public class Node : MonoBehaviour
         content.transform.SetParent(NodeManager.instance.entitys);
         NodeManager.instance.fallingNodes.Add(this);
     }
+
+    public void CreateAi()
+    {
+        GameObject newEntity = Instantiate(NodeManager2.instance.prefab_Ai);
+        content2 = newEntity.GetComponent<PathAI>();
+        content2.transform.position = this.transform.position;
+        content2.transform.SetParent(NodeManager2.instance.entitys);
+        content2.Setup(this);
+        content2.Go();
+    }
+
 
 
     private void EndFalling()
@@ -135,53 +147,6 @@ public class Node : MonoBehaviour
         private Node GetTargetNode()
     {
         Node targetNode = null;
-        /*
-
-                int underY = y - 1;
-
-                if (check == false)
-                {
-                    targetNode = NodeManager.instance.board_array[x, underY];
-                }
-                else
-                {
-                    if (LR == 0) // ¿ÞÂÊ
-                    {
-                        int num = x - 1;
-                        while (num >= 0)
-                        {
-                            if (NodeManager.instance.board_array_master[num, underY, 0] == 1)
-                            {
-                                isDiagonalFall = true;
-                                targetNode = NodeManager.instance.board_array[num, underY];
-
-                                return targetNode;
-                            }
-                            else
-                            {
-                                num--;
-                            }
-                        }
-                    }
-                    else // ¿À¸¥ÂÊ
-                    {
-                        int num = x + 1;
-
-                        while (num < NodeManager.instance.MAX_X - 1)
-                        {
-                            if (NodeManager.instance.board_array_master[num, underY, 0] == 1)
-                            {
-                                isDiagonalFall = true;
-                                targetNode = NodeManager.instance.board_array[num, underY];
-                                return targetNode;
-                            }
-                            else
-                            {
-                                num++;
-                            }
-                        }
-                    }
-                }*/
 
         Queue<Node> buffer = new Queue<Node>();
         for(int i =0; i < NodeManager.instance.MAX_X; i++)
